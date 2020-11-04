@@ -1,0 +1,54 @@
+package permuPalindrome;
+
+import java.util.*;
+
+public class permuPalindrome {
+	public static void main(String[] args) {
+		String str = "Tact Coa";
+		boolean palindrome=isPalindrome(str);	
+		System.out.println(palindrome);
+		}
+	
+	public static boolean isPalindrome(String str)
+	{	
+		
+		str=str.replaceAll("( +)","").toLowerCase(); // remove all spaces
+		Map<Character,Integer> map=new HashMap<>();
+		
+		//put into hashmap
+		for(int i=0;i<str.length();i++)
+		{	
+			if(map.get(str.charAt(i)) != null) //element already present
+			{
+				map.put(str.charAt(i), map.get(str.charAt(i))+1);
+			}
+			else
+			{
+				map.put(str.charAt(i), 1);
+			}
+		}
+		
+		//we know that to be a palindrome each element should be of 2 same characters
+		// and maximum of 1 character in between whose count is not 2 
+		int oddCounter=0;
+		for(Character current:map.keySet())
+		{
+			if(map.get(current)!=2 && oddCounter!=1)
+			{
+				oddCounter=1; // we got 1 odd element for odd sized palindrome which is in middle
+			}
+			else if(map.get(current)==2)
+			{
+				continue; // perfect 2 characters for a palindrome
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		
+		return true;
+	}
+}
+
