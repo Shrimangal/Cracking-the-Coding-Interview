@@ -1,0 +1,28 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        
+        int n=matrix.length;;
+        
+        //transpose
+        for(int i=0;i<n;i++)
+        {  // int l=0;
+            for(int j=i;j<n;j++) //j=i as the data before it is arranged previously and if accessed again as j=0 it will be changed again to normal
+            {
+                int temp=matrix[j][i];
+                matrix[j][i]=matrix[i][j];
+                matrix[i][j]=temp;
+            }
+        }
+        
+    ///revere each row    
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n / 2; j++) {
+        int tmp = matrix[i][j];
+        matrix[i][j] = matrix[i][n - j - 1];
+        matrix[i][n - j - 1] = tmp;
+      }
+    }
+
+        
+    }
+}
