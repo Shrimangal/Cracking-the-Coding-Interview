@@ -1,0 +1,42 @@
+//1.5 One Away / 72. Edit Distance (Leetcode)
+
+class Solution {
+    //Lavenstein Equation
+    //https://www.youtube.com/watch?v=MiqoA-yF-0M
+    //https://www.youtube.com/watch?v=XJ6e4BQYJ24
+    
+    public int minDistance(String word1, String word2) {
+        //word1 -->col, word2 ---> row
+        int[][] lve=new int[word2.length()+1][word1.length()+1];
+        
+        for(int i=0;i<word1.length()+1;i++)
+        {
+            lve[0][i]=i;          //filling 1st row all columns to count number of deletions
+        }
+        
+        for(int i=0;i<word2.length()+1;i++)
+        {
+            lve[i][0]=i;          //filling 1st column all columns to count number of insertions
+        }
+        
+        for(int i=1;i<word2.length()+1;i++)
+        {
+            for(int j=1;j<word1.length()+1;j++)
+            {   
+                int insertUp=lve[i-1][j]+1; //**here add 1 because even if it is common there is always 1 step
+                int deleteRight=lve[i][j-1]+1;
+                int replaceUpDiagonal=lve[i-1][j-1]; //**VIMP here,dont add 1 as 2 characters can be common
+                if(word2.charAt(i-1)==word1.charAt(j-1))
+                {
+                    lve[i][j]=Math.min(Math.min(insertUp,deleteRight),replaceUpDiagonal);
+                }
+                else
+                {
+                    lve[i][j]=Math.min(Math.min(insertUp,deleteRight),replaceUpDiagonal+1);
+                }
+            }
+        }
+        
+        return lve[word2.length()][word1.length()];
+    }
+}
